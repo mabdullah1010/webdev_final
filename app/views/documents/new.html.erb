@@ -1,0 +1,38 @@
+<h1>Upload Document</h1>
+
+<%= form_with model: @document, local: true, html: { multipart: true } do |form| %>
+  <% if @document.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@document.errors.count, "error") %> prohibited this document from being saved:</h2>
+      <ul>
+        <% @document.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :category %><br>
+    <%= form.text_field :category %>
+  </div>
+
+  <div>
+    <%= form.label :file %><br>
+    <%= form.file_field :file %>
+  </div>
+  <div>
+  <%= form.label :keywords %><br>
+  <%= form.text_field :keywords, placeholder: "e.g. AI, Rails, Education" %>
+  </div>
+
+
+  <div>
+    <%= form.submit "Upload" %>
+  </div>
+<% end %>

@@ -1,0 +1,76 @@
+<h1>All Documents</h1>
+
+<%= link_to "Upload New Document", new_document_path, class: "button" %>
+<%= form_with url: documents_path, method: :get, local: true do |form| %>
+  <div style="margin-bottom: 1rem;">
+    <%= form.label :category %>
+    <%= form.text_field :category, placeholder: "e.g. Education, AI" %>
+
+    <%= form.label :keyword %>
+    <%= form.text_field :keyword, placeholder: "e.g. Rails, PDF, Data" %>
+
+    <%= form.submit "Filter" %>
+    <%= link_to "Clear Filters", documents_path, style: "margin-left: 10px;" %>
+  </div>
+<% end %>
+
+<% if params[:category].present? || params[:keyword].present? %>
+  <p>
+    <strong>Filtering:</strong>
+    <% if params[:category].present? %>
+      Category = "<%= params[:category] %>"
+    <% end %>
+    <% if params[:keyword].present? %>
+      <% if params[:category].present? %>and <% end %>
+      Keyword = "<%= params[:keyword] %>"
+    <% end %>
+  </p>
+<% end %>
+
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Category</th>
+      <th>File</th>
+      <th>Keywords</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @documents.each do |document| %>
+      <tr>
+        <td><%= document.title %></td>
+        <td><%= link_to document.category, documents_path(category: document.category), style: "color: blue;" %></td>
+
+        <td>
+          <% if document.file.attached? %>
+            <%= link_to document.file.filename, url_for(document.file), target: "_blank" %>
+          <% else %>
+            No file attached
+          <% end %>
+        </td>
+
+        <td>
+        <% if document.keywords.present? %>
+        <% document.keywords.split(',').map(&:strip).each do |kw| %>
+        <%= link_to kw, documents_path(keyword: kw), style: "background: #eee; padding: 2px 6px; margin: 2px; border-radius: 4px; display: inline-block;" %>
+        <% end %>
+     <% else %>
+      No keywords
+      <% end %>
+        </td>
+
+
+        <td>
+          <%= link_to "Show", document_path(document) %> |
+          <%= link_to "Edit", edit_document_path(document) %> |
+          <%= link_to "Delete", document_path(document), method: :delete, data: { confirm: "Are you sure?" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
