@@ -1,3 +1,5 @@
+<%= javascript_importmap_tags %>
+
 <h1>All Documents</h1>
 
 <%= link_to "Upload New Document", new_document_path, class: "button" %>
@@ -68,7 +70,8 @@
         <td>
           <%= link_to "Show", document_path(document) %> |
           <%= link_to "Edit", edit_document_path(document) %> |
-          <%= link_to "Delete", document_path(document), method: :delete, data: { confirm: "Are you sure?" } %>
+          <%= button_to "Delete", document_path(document), method: :delete, data: { confirm: "Are you sure?" } %>
+
         </td>
       </tr>
     <% end %>
