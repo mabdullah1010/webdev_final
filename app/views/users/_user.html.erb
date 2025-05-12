@@ -1,0 +1,21 @@
+
+<div id="<%= dom_id user %>" class="card">
+  <div class="card-header">
+    <%= user.username %>
+
+    <% if logged_in? && current_user.id==user.id %>
+      <a href="<%= edit_user_path(user) %>" class="btn btn-warning btn-sm float-end"><i class="bi bi-pencil-square"></i> Edit My Account</a>
+    <% end %>
+
+  </div>
+  <div class="card-body">
+    <p class="card-text"><%= user.email %></p>
+    <span class="badge text-bg-success"><%= pluralize(user.documents.count,'document') %> created!</span>
+  </div>
+  <div class="card-footer">
+    <% if logged_in? && current_user.id==user.id %>
+      <%= button_to "DELETE MY ACCOUNT", user, method: :delete, class: "btn btn-danger btn-sm" %>
+    <% end %>
+    <small class="text-body-secondary"><%= user.details %></small>
+  </div>
+</div>

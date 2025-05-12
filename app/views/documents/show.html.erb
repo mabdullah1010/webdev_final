@@ -22,11 +22,9 @@
       <%= tag.iframe src: url_for(@document.file), width: "100%", height: "600px", style: "border: 1px solid #ccc;" %>
     </div>
 
-    <!-- Notes/Comments Sidebar -->
     <div style="flex: 1;">
-      <h3>Notes</h3>
-      <p>This section will hold notes or comments.</p>
-      <!-- Placeholder for future comments form or display -->
+      <h3>Comments</h3>
+      <p>This section will hold comments.</p>
       <%= link_to "Edit Document", edit_document_path(@document), class: "button" %>
     </div>
 
@@ -34,3 +32,16 @@
 <% else %>
   <p>No file attached.</p>
 <% end %>
+
+<h3><b>Comments:</b><h3>
+<hr>
+<% if ! @document.comments.nil? %>
+  <% @document.comments.each do |comment|%>
+    <%=comment.content %>
+    <hr>
+  <% end%>
+<%else%>
+    <p>no comments</p>
+<%end%>
+
+<%=link_to "Write a comment", comments_path%>

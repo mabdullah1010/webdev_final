@@ -3,7 +3,7 @@ class DocumentsController < ApplicationController
   before_action :set_document, only: [:show, :edit, :update, :destroy]
 
   #def index
-  #  @documents = Document.where(user: User.first)  # TEMP: replace with current_user
+  #  @documents = Document.where(user: User.first)  #  replace with current_user
   #end
 
   def index
@@ -36,6 +36,7 @@ class DocumentsController < ApplicationController
 
   def show
     @document = Document.find(params[:id])
+    current_document = @document.id
   end
 
   def edit
@@ -69,4 +70,9 @@ class DocumentsController < ApplicationController
   def set_document
     @document = Document.find(params[:id])  # TEMP: current_user.documents.find(...)
   end
+
+  def current_document
+    @current_document = Document.find_by(id: document_id)
+  end
+
 end
