@@ -48,6 +48,11 @@ class UsersController < ApplicationController
     reset_session
     redirect_to root_path, notice: "Account Deleted"
   end
+  
+  def documents
+    @user = User.find(params[:id])
+    @documents = @user.documents.order(created_at: :desc)
+  end
 
   private
 

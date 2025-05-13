@@ -1,40 +1,71 @@
-<h1>Edit Document</h1>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">\
 
-<%= form_with model: @document, local: true, html: { multipart: true } do |form| %>
-  <% if @document.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@document.errors.count, "error") %> prohibited this document from being saved:</h2>
-      <ul>
-        <% @document.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+
+          <h1 class="card-title mb-4">Edit Document</h1>
+
+          <%= form_with model: @document, local: true, html: { multipart: true, class: "needs-validation" } do |form| %>
+            <% if @document.errors.any? %>
+              <div class="alert alert-danger">
+                <h4 class="alert-heading"><%= pluralize(@document.errors.count, "error") %> prohibited this document from being saved:</h4>
+                <ul>
+
+                  <% @document.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                  <% end %>
+
+
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="mb-3">
+
+
+
+              <%= form.label :title, class: "form-label" %>
+              <%= form.text_field :title, class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= form.label :category, class: "form-label" %>
+
+              <%= form.text_field :category, class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= form.label :file, "Replace File", class: "form-label" %>
+              <%= form.file_field :file, class: "form-control" %>
+              <% if @document.file.attached? %>
+
+                <div class="form-text mt-2">
+                  Current file: <%= link_to @document.file.filename, url_for(@document.file), target: "_blank" %>
+                </div>
+              <% end %>
+            </div>
+
+
+            <div class="mb-3">
+            
+              <%= form.label :keywords, class: "form-label" %>
+              <%= form.text_field :keywords, placeholder: "e.g. AI, Rails, Education", class: "form-control" %>
+            </div>
+
+            <div class="d-grid">
+              <%= form.submit "Update Document", class: "btn btn-primary" %>
+            </div>
+
+          <% end %>
+        </div>
+        
+      </div>
     </div>
-  <% end %>
 
-  <div>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
   </div>
 
-  <div>
-    <%= form.label :category %><br>
-    <%= form.text_field :category %>
-  </div>
 
-  <div>
-    <%= form.label :file, "Replace File" %><br>
-    <%= form.file_field :file %>
-    <% if @document.file.attached? %>
-      <p>Current file: <%= link_to @document.file.filename, url_for(@document.file), target: "_blank" %></p>
-    <% end %>
-  </div>
-  <div>
-  <%= form.label :keywords %><br>
-  <%= form.text_field :keywords, placeholder: "e.g. AI, Rails, Education" %>
-  </div>
-
-  <div>
-    <%= form.submit "Update Document" %>
-  </div>
-<% end %>
+</div>

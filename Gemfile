@@ -8,6 +8,7 @@ gem "rails", "~> 7.2.2", ">= 7.2.2.1"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
+
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", ">= 1.4"
 gem "aws-sdk-s3", require: false
@@ -45,9 +46,13 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
 
-gem "bootstrap", '~> 5.3.3'
-gem "sassc-rails"
-gem "jquery-rails"
+# Styling gems
+gem 'bootstrap', '~> 5.3.3'
+gem 'dartsass-sprockets'    # Dart Sass for SCSS compilation
+gem 'autoprefixer-rails'    # Browser compatibility
+gem 'jquery-rails'          # jQuery for front-end functionality
+gem 'font-awesome-sass', '~> 6.4.0'  # Font Awesome icons
+
 
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]

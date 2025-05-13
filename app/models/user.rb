@@ -16,6 +16,8 @@ class User < ApplicationRecord
             if: -> { new_record? || !password.nil? }
 
 	has_many :documents, dependent: :destroy	# if a user is deleted, also delete their likes
+	has_many :comments, dependent: :destroy
+
 	before_save { self.email = email.downcase }
 	validates :username, presence: true, length: { maximum: 50 }
 
@@ -46,10 +48,9 @@ class User < ApplicationRecord
 		SecureRandom.urlsafe_base64
 	end
 
-	# Remembers a user in the database for use in persistent sessions.
 	def remember
 		self.remember_token = User.new_token
-		update_attribute(:remember_digest, User.digest(remember_token))
+		update_column(:remember_digest, User.digest(remember_token))
 	end
 
 	# Returns true if the given token matches the digest.
@@ -60,7 +61,7 @@ class User < ApplicationRecord
 
 	# Forgets a user.
 	def forget
-		update_attribute(:remember_digest, nil)
+		update_column(:remember_digest, nil)
 	end
 
 end

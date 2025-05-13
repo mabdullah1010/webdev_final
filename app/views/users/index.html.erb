@@ -1,26 +1,24 @@
-<p style="color: green"><%= notice %></p>
-
-<% content_for :title, "Users" %>
-
-<div class="card">
-  <div class="card-header">
-    <i class="bi bi-journals"></i> <%= pluralize(@users.count, "USER", plural:"USERS") %>
-    <% if !logged_in? %>
-      <a href="<%= new_user_path %>" class="btn btn-primary btn-sm float-end"><i class="bi bi-pencil-square"></i> Sign Up</a>
-    <% end %>
-  </div>
-  <div class="card-body">
-    <ol class="list-group list-group-numbered" id="users">
-      <% @users.each do |user| %>
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-          <div class="ms-2 me-auto">
-            <div class="fw-bold"><a href="<%= home_path %>"><%= user.username %></a></div>
-            <%= user.email %>
-          </div>
-          <!-- <span class="badge text-bg-primary rounded-pill"><%= pluralize(user.documents.count, "Document", plural:"Documents") %></span> -->        </li>
+<div class="container mt-4">
+  <div class="card" style="background-color: #afd8ff;">
+    <div class="card-header">
+      <i class="bi bi-journals"></i> <%= pluralize(@users.count, "USER", plural: "USERS") %>
+      <% if !logged_in? %>
+        <%= link_to "Sign Up", new_user_path, class: "btn signup-btn btn-sm float-end" %>
       <% end %>
-      
-    </ol>
-
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <% @users.each do |user| %>
+          <div class="col-md-4">
+            <%= link_to documents_user_path(user), class: "card user-card text-decoration-none" do %>
+              <div class="card-body">
+                <div class="user-card-header"><%= user.username %></div>
+                <div class="user-card-email"><%= user.email %></div>
+              </div>
+            <% end %> 
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

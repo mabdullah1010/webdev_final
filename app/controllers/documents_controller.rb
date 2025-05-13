@@ -26,7 +26,7 @@ class DocumentsController < ApplicationController
 
   def create
     @document = Document.new(document_params)
-    @document.user = User.first  # TEMPORARY: replace with current_user
+    @document.user = current_user
     if @document.save
       redirect_to @document, notice: "Document uploaded successfully."
     else

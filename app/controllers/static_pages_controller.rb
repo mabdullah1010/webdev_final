@@ -1,5 +1,8 @@
 class StaticPagesController < ApplicationController
   def home
+    if logged_in?
+    @recent_documents = current_user.documents.order(created_at: :desc).limit(3)
+    end
   end
 
   def about

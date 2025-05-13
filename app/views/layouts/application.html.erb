@@ -1,39 +1,121 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Toy App" %></title>
+    <title><%= content_for(:title) || "Paper Clip" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
-
-    <%= favicon_link_tag 'icon.png', :rel => 'shortcut icon', :type => 'image/png' %>
-    <%= favicon_link_tag 'icon.png', :rel => 'apple-touch-icon', :type => 'image/png' %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
-    <%= stylesheet_link_tag :main %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
-        <a class="navbar-brand" href="<%= home_url %>"><%= image_tag("icon.png", alt:"TOYAPP", :class => "navbar-icon")%> Toy App</a>
+        <a class="navbar-brand" href="<%= root_path %>">
+          <i class="fa-solid fa-paperclip fa-bounce" style="color: #4a6fa5;">Paper Clip</i>
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <%= link_to 'Home', root_path, class: "nav-link #{'active' if current_page?(root_path)}" %>
+            </li>
+            <% if logged_in? %>
+              <li class="nav-item">
+                <%= link_to 'Users', users_path, class: "nav-link #{'active' if current_page?(users_path)}" %>
+              </li>
+            <% end %>
+            <li class="nav-item">
+              <%= link_to 'Documents', documents_path, class: "nav-link #{'active' if current_page?(documents_path)}" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'About', about_path, class: "nav-link #{'active' if current_page?(about_path)}" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Help', help_path, class: "nav-link #{'active' if current_page?(help_path)}" %>
+            </li>
+          </ul>
+
+          <ul class="navbar-nav">
+          <% if logged_in? %>
+          <li class="nav-item"><span class="nav-link disabled text-primary fw-semibold"> <%= current_user.username %></span></li>
+          <% else %>
+          <li class="nav-item"><span class="nav-link disabled text-primary fw-semibold"> Anonymous User</span></li>
+
+          <% end %>
+            <li class="nav-item">
+              <%= link_to 'Sign Up', signup_path, class: "nav-link signup-btn #{'active' if current_page?(signup_path)}" %>
+            </li>
+            
+            <% if logged_in? %>
+              <li class="nav-item">
+                <%= button_to 'Logout', logout_path, method: :delete, 
+                    form_class: "d-inline", 
+                    class: 'logout-btn' %>
+              </li>
+            <% else %>
+              <li class="nav-item">
+                <%= link_to 'Login', login_path, class: "nav-link login-btn #{'active' if current_page?(login_path)}" %>
+              </li>
+            <% end %>
+          </ul>
         </div>
       </div>
     </nav>
 
     <div class="container-fluid">
       <%= yield %>
-      <div class="alert alert-dark" role="alert">
-        <%= debug(params) if Rails.env.development? %>
-      </div>
+
+
+
+
+
 
     </div>
-    
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <br>
+    <footer class="bg-light text-center text-lg-start mt-5 border-top">
+  <div class="container py-4">
+    <div class="row">
+      <div class="col-md-6 text-md-start mb-3 mb-md-0">
+        <h6 class="text-uppercase fw-bold">Paper Clip</h6>
+        <p class="text-muted">Your document management system at Connecticut College.</p>
+        <p class="text-muted">An idea implemented by:</p>
+        <ul>
+        <li>Max Davis</li>
+        <li>Sa'ada Umaima Maliha</li>
+        <li>Muhammad Abdullah</li>
+        </ul>
+      </div>
+
+      <div class="col-md-6 text-md-end">
+        <ul class="list-unstyled d-flex justify-content-md-end justify-content-center gap-3 mb-0">
+          <li><%= link_to "Home", root_path, class: "text-decoration-none text-muted" %></li>
+          <li><%= link_to "About", about_path, class: "text-decoration-none text-muted" %></li>
+          <li><%= link_to "Help", help_path, class: "text-decoration-none text-muted" %></li>
+        </ul>
+      </div>
+    </div>
+    <hr>
+    <p class="mb-0 text-center text-muted small">&copy; <%= Time.now.year %> Paper Clip. All rights reserved.</p>
+  </div>
+</footer>
+
   </body>
 </html>

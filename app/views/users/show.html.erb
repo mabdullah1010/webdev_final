@@ -1,12 +1,27 @@
-<% content_for :title, "New user" %>
+<% content_for :title, "New User" %>
 
-<h1>Sign Up</h1>
+<div class="container mt-4">
+  <div class="row justify-content-center">
 
-<%= render "form", user: @user %>
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+        
+          <h1 class="card-title text-center mb-4">Sign Up</h1>
 
-<br>
+          <%= render "form", user: @user %>
 
-<div>
-  <%= link_to "Back to users", users_path %>
-  <p>Returning user? <%= link_to "Sign In", login_path %></p>
+          <div class="mt-4 text-center">
+            <%= link_to "Back to Users", users_path, class: "btn btn-secondary me-2" %>
+            <p class="mt-3">
+              Returning user?
+              <%= link_to "Sign In", login_path, class: "link-primary" %>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  
 </div>

@@ -1,79 +1,85 @@
 <%= javascript_importmap_tags %>
 
-<h1>All Documents</h1>
-
-<%= link_to "Upload New Document", new_document_path, class: "button" %>
-<%= form_with url: documents_path, method: :get, local: true do |form| %>
-  <div style="margin-bottom: 1rem;">
-    <%= form.label :category %>
-    <%= form.text_field :category, placeholder: "e.g. Education, AI" %>
-
-    <%= form.label :keyword %>
-    <%= form.text_field :keyword, placeholder: "e.g. Rails, PDF, Data" %>
-
-    <%= form.submit "Filter" %>
-    <%= link_to "Clear Filters", documents_path, style: "margin-left: 10px;" %>
-  </div>
-<% end %>
-
-<% if params[:category].present? || params[:keyword].present? %>
-  <p>
-    <strong>Filtering:</strong>
-    <% if params[:category].present? %>
-      Category = "<%= params[:category] %>"
+<div class="documents-container">
+  <div class="container">
+    <h1 class="documents-title">All Documents</h1>
+    
+    <%= link_to "Upload New Document", new_document_path, class: "btn btn-primary mb-4" %>
+    
+    <%= form_with url: documents_path, method: :get, local: true, class: "mb-4" do |form| %>
+      <div class="card filter-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-5 mb-3 mb-md-0">
+              <%= form.label :category, "Filter by Category", class: "form-label filter-label" %>
+              <%= form.text_field :category, placeholder: "e.g. Education, AI", class: "form-control filter-input" %>
+            </div>
+            <div class="col-md-5 mb-3 mb-md-0">
+              <%= form.label :keyword, "Filter by Keyword", class: "form-label filter-label" %>
+              <%= form.text_field :keyword, placeholder: "e.g. Rails, PDF, Data", class: "form-control filter-input" %>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+              <%= form.submit "Filter", class: "btn filter-btn me-2 flex-grow-1" %>
+              <%= link_to "Clear", documents_path, class: "btn clear-btn flex-grow-1" %>
+            </div>
+          </div>
+        </div>
+      </div>
     <% end %>
-    <% if params[:keyword].present? %>
-      <% if params[:category].present? %>and <% end %>
-      Keyword = "<%= params[:keyword] %>"
-    <% end %>
-  </p>
-<% end %>
 
-
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Category</th>
-      <th>File</th>
-      <th>Keywords</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @documents.each do |document| %>
-      <tr>
-        <td><%= document.title %></td>
-        <td><%= link_to document.category, documents_path(category: document.category), style: "color: blue;" %></td>
-
-        <td>
-          <% if document.file.attached? %>
-            <%= link_to document.file.filename, url_for(document.file), target: "_blank" %>
-          <% else %>
-            No file attached
-          <% end %>
-        </td>
-
-        <td>
-        <% if document.keywords.present? %>
-        <% document.keywords.split(',').map(&:strip).each do |kw| %>
-        <%= link_to kw, documents_path(keyword: kw), style: "background: #eee; padding: 2px 6px; margin: 2px; border-radius: 4px; display: inline-block;" %>
+    <% if params[:category].present? || params[:keyword].present? %>
+      <div class="alert filter-alert mb-4">
+        <strong>Filtering:</strong>
+        <% if params[:category].present? %>
+          Category = "<%= params[:category] %>"
         <% end %>
-        <% else %>
-          No keywords
-          <% end %>
-        </td>
+        <% if params[:keyword].present? %>
+          <% if params[:category].present? %>and <% end %>
+          Keyword = "<%= params[:keyword] %>"
+        <% end %>
+      </div>
+    <% end %>
 
-
-        <td>
-          <%= link_to "Show", document_path(document) %> |
-          <%= link_to "Edit", edit_document_path(document) %> |
-          <%= button_to "Delete", document_path(document), method: :delete, data: { confirm: "Are you sure?" } %>
-
-        </td>
-      </tr>
-      <%end%>
-  </tbody>
-</table>
+    <div class="documents-grid">
+      <% @documents.each do |document| %>
+        <div class="card document-card">
+          <div class="card-header">
+            <h5 class="mb-0"><%= document.title %></h5>
+          </div>
+          <div class="card-body">
+            <%= link_to document.category, documents_path(category: document.category), class: "document-category" %>
+            
+            <p class="card-text mt-2">
+              <% if document.file.attached? %>
+                <%= link_to document.file.filename, url_for(document.file), target: "_blank", class: "text-decoration-none" %>
+              <% else %>
+                <span class="text-muted">No file attached</span>
+              <% end %>
+            </p>
+            
+            <div class="mb-2">
+              <% if document.keywords.present? %>
+                <% document.keywords.split(',').map(&:strip).each do |kw| %>
+                  <%= link_to kw, documents_path(keyword: kw), class: "document-keyword" %>
+                <% end %>
+              <% else %>
+                <span class="text-muted">No keywords</span>
+              <% end %>
+            </div>
+            
+            <div class="upload-time">
+              <p>Uploaded: <%= document.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+              <p>By: <%= document.user&.username || "Unknown user" %></p>
+            </div>
+            
+            <div class="d-flex justify-content-between mt-3">
+              <%= link_to "Show", document_path(document), class: "btn btn-sm btn-show" %>
+              <%= link_to "Edit", edit_document_path(document), class: "btn btn-sm btn-edit" %>
+              <%= button_to "Delete", document_path(document), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-delete" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

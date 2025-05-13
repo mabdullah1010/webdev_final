@@ -1,4 +1,59 @@
-<h1>Paper Clip</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
+<div class="container mt-4">
+  <div class="text-center mb-4">
+    <h1>
+      <% if logged_in? %>
+        Welcome, <%= current_user.username %>!
+      <% else %>
+        <strong>Paper Clip</strong>
+      <% end %>
+    </h1>
+    <% if logged_in? %>
+      <p class="lead text-muted">Your document management made simple</p>
+    <% end %>
+  </div>
 
-<h1></h1>
+  <% if logged_in? %>
+    <h3 class="mb-3">Your Recent Documents</h3>
+
+    <% recent_docs = current_user.documents.order(created_at: :desc).limit(3) %>
+
+    <% if recent_docs.any? %>
+      <div class="row">
+        <% recent_docs.each do |document| %>
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title"><%= document.title %></h5>
+                <p class="card-text text-muted">
+                  <%= document.category %> • Uploaded <%= time_ago_in_words(document.created_at) %> ago
+                </p>
+                <% if document.file.attached? %>
+                  <%= link_to "View File", url_for(document.file), target: "_blank", class: "btn btn-outline-primary btn-sm me-2" %>
+                <% end %>
+                <%= link_to "Details", document_path(document), class: "btn btn-outline-secondary btn-sm" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="alert alert-info">
+        You haven’t uploaded any documents yet.
+      </div>
+    <% end %>
+
+    <div class="text-center mt-3">
+      <%= link_to "View All Documents", documents_path, class: "btn btn-primary" %>
+    </div>
+  <% else %>
+    <div class="text-center">
+      <p class="lead mb-4">
+        Paper Clip helps you organize and manage all your important documents in one place.
+      </p>
+      <div>
+        <%= link_to "Login", login_path, class: "btn btn-primary me-2" %>
+        <%= link_to "Sign Up", signup_path, class: "btn btn-outline-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>

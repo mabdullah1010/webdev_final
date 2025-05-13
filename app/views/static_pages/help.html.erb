@@ -1,2 +1,95 @@
-<h1>StaticPages#help</h1>
-<p>Find me in app/views/static_pages/help.html.erb</p>
+<div class="help-container">
+  <div class="help-header">
+    <h1 class="help-title">
+      <i class="fa-solid fa-circle-question" style="color: #5d9cec;"></i>
+      Need Help?
+    </h1>
+    <p class="help-subtitle">We are here to make document management easy for you!</p>
+  </div>
+
+  <div class="help-content">
+    <!-- FAQ Section -->
+    <div class="help-card faq-card">
+      <h2 class="card-title">
+        <i class="fa-solid fa-list-check" style="color: #a0d9b4;"></i>
+        Frequently Asked Questions
+      </h2>
+      <div class="faq-item">
+        <h3 class="question">
+          <i class="fa-solid fa-q" style="color: #f5a8a8;"></i>
+          How do I upload a document?
+        </h3>
+        <p class="answer">
+          Click the "Upload New Document" button on the Documents page, fill in the details, and select your file!
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3 class="question">
+          <i class="fa-solid fa-q" style="color: #f5a8a8;"></i>
+          Can I organize my documents?
+        </h3>
+        <p class="answer">
+          Yes! Use categories and keywords to easily organize and find your documents later.
+        </p>
+      </div>
+      <div class="faq-item">
+        <h3 class="question">
+          <i class="fa-solid fa-q" style="color: #f5a8a8;"></i>
+          How do I add comments?
+        </h3>
+        <p class="answer">
+          Open any document and click "Add Comment" to leave notes for yourself or your team.
+        </p>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="help-card contact-card">
+      <h2 class="card-title">
+        <i class="fa-solid fa-envelope" style="color: #f5e6a6;"></i>
+        Contact Us
+      </h2>
+      <div class="contact-methods">
+        <div class="contact-method">
+          <i class="fa-solid fa-envelope-circle-check" style="color: #5d9cec;"></i>
+          <span>Email: help@paperclip.example</span>
+        </div>
+        <div class="contact-method">
+          <i class="fa-solid fa-phone" style="color: #a0d9b4;"></i>
+          <span>Phone: (123) 456-7890</span>
+        </div>
+        <div class="contact-method">
+          <i class="fa-solid fa-comment-dots" style="color: #f5a8a8;"></i>
+          <span>Live Chat: Available 9AM-5PM</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tutorial Section -->
+    <div class="help-card tutorial-card">
+      <h2 class="card-title">
+        <i class="fa-solid fa-graduation-cap" style="color: #d1b3ff;"></i>
+        Quick Tutorial
+      </h2>
+      <div class="tutorial-steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <p>Upload your documents using the upload button</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <p>Add categories and keywords for organization</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <p>View and comment on your documents anytime</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="help-footer">
+    <%= link_to "← Back to Home", root_path, class: "back-link" %>
+    <%= link_to "Visit Our FAQ Page", "#", class: "faq-link" %>
+  </div>
+</div>

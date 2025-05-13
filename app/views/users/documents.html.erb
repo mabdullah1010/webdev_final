@@ -1,0 +1,54 @@
+<div class="user-documents-container">
+  <div class="user-header">
+    <h2 class="user-title">
+      <i class="fa-solid fa-folder-open" style="color: #5d9cec;"></i>
+      <%= @user.username %>'s Documents
+    </h2>
+    <p class="document-count">
+      <%= @documents.count %> document<%= @documents.count == 1 ? '' : 's' %> total
+    </p>
+  </div>
+
+  <% if @documents.any? %>
+    <div class="documents-grid">
+      <% @documents.each do |document| %>
+        <div class="document-card">
+          <div class="card-header">
+            <i class="fa-solid fa-file-lines" style="color: #a0d9b4;"></i>
+            <h3 class="document-title"><%= document.title %></h3>
+          </div>
+          <div class="card-body">
+            <div class="document-meta">
+              <span class="meta-item">
+                <i class="fa-solid fa-tag" style="color: #f5a8a8;"></i>
+                <%= document.category || "No category" %>
+              </span>
+              <span class="meta-item">
+                <i class="fa-solid fa-clock" style="color: #f5e6a6;"></i>
+                <%= time_ago_in_words(document.created_at) %> ago
+              </span>
+            </div>
+            <% if document.keywords.present? %>
+              <div class="document-keywords">
+                <% document.keywords.split(',').map(&:strip).each do |kw| %>
+                  <span class="keyword-bubble"><%= kw %></span>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <div class="card-footer">
+            <%= link_to "View Document", document_path(document), class: "view-btn" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="no-documents">
+      <i class="fa-solid fa-cloud" style="color: #d1b3ff; font-size: 3rem;"></i>
+      <p>This user has not uploaded any documents yet.</p>
+      <% if current_user == @user %>
+        <%= link_to "Upload Your First Document", new_document_path, class: "upload-btn" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

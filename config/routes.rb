@@ -6,7 +6,11 @@ Rails.application.routes.draw do
     get '/help',    to: 'static_pages#help'
   
     # User management
-    resources :users 
+    resources :users do
+      member do
+        get 'documents', to: 'users#documents'
+        end
+    end
       # User management
     get '/signup',  to: 'users#new'  # More intuitive than /users/new
   
@@ -15,6 +19,8 @@ Rails.application.routes.draw do
     get    '/login',   to: 'sessions#new'
     post   '/login',   to: 'sessions#create'
     delete '/logout',  to: 'sessions#destroy'
+
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
