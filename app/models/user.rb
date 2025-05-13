@@ -15,7 +15,6 @@ class User < ApplicationRecord
             length: { minimum: 6 },
             if: -> { new_record? || !password.nil? }
 
-    has_many :comments, dependent: :destroy	# if a user is deleted, also delete their microposts
 	has_many :documents, dependent: :destroy	# if a user is deleted, also delete their likes
 	before_save { self.email = email.downcase }
 	validates :username, presence: true, length: { maximum: 50 }

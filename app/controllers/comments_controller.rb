@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[ show edit update destroy ]
-
+  before_action :set_document, only: %i[ new create ]
   # GET /comments or /comments.json
   def index
     @comments = Comment.all
@@ -23,12 +23,12 @@ class CommentsController < ApplicationController
   # POST /comments or /comments.json
   def create
     @comment = Comment.new(comment_params)
-    @comment.document_id = current_document.id
+    @comment.document_id = @document.id
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment, notice: "Comment was successfully created." }
-        format.json { render :show, status: :created, location: @comment }
+        format.html { redirect_to @document, notice: "Comment was successfully created." }
+        format.json { render :show, status: :created, location: @document }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
@@ -64,6 +64,11 @@ class CommentsController < ApplicationController
     def set_comment
       @comment = Comment.find(params[:id])
     end
+
+    def set_document
+      @document = Document.find(params[:document_id])
+    end
+
 
     # Only allow a list of trusted parameters through.
     def comment_params
