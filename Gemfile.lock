@@ -126,6 +126,10 @@ GEM
     debug (1.10.0)
       irb (~> 1.10)
       reline (>= 0.3.8)
+    dotenv (3.1.8)
+    dotenv-rails (3.1.8)
+      dotenv (= 3.1.8)
+      railties (>= 6.1)
     drb (2.2.1)
     error_highlight (0.7.0)
     erubi (1.13.1)
@@ -222,6 +226,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.8-x86_64-linux-musl)
       racc (~> 1.4)
+    pg (1.5.9)
     popper_js (2.11.8)
     pp (0.6.2)
       prettyprint
@@ -262,6 +267,11 @@ GEM
     rails-html-sanitizer (1.6.2)
       loofah (~> 2.21)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
+    rails_12factor (0.0.3)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.5)
+    rails_stdout_logging (0.0.5)
     railties (7.2.2.1)
       actionpack (= 7.2.2.1)
       activesupport (= 7.2.2.1)
@@ -370,14 +380,17 @@ DEPENDENCIES
   capybara
   dartsass-sprockets
   debug
+  dotenv-rails
   error_highlight (>= 0.4.0)
   font-awesome-sass (~> 6.4.0)
   image_processing (~> 1.12)
   importmap-rails
   jbuilder
   jquery-rails
+  pg
   puma (>= 5.0)
   rails (~> 7.2.2, >= 7.2.2.1)
+  rails_12factor
   selenium-webdriver
   sprockets-rails
   sqlite3 (>= 1.4)
